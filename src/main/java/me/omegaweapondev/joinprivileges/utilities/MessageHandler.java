@@ -8,12 +8,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.util.List;
 
 public class MessageHandler {
+  private final JoinPrivileges plugin;
   private final FileConfiguration messagesConfig;
   private final String configName;
 
-  public MessageHandler(final FileConfiguration messagesConfig) {
+  public MessageHandler(final JoinPrivileges plugin, final FileConfiguration messagesConfig) {
+    this.plugin = plugin;
     this.messagesConfig = messagesConfig;
-    this.configName = JoinPrivileges.getInstance().getMessagesFile().getFileName();
+    this.configName = plugin.getSettingsHandler().getMessagesFile().getFileName();
   }
 
   public String string(final String message, final String fallbackMessage) {

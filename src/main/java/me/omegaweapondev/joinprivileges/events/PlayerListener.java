@@ -17,7 +17,14 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class PlayerListener implements Listener {
-  private final SettingsHandler settingsHandler = new SettingsHandler(JoinPrivileges.getInstance().getConfigFile().getConfig());
+  private final JoinPrivileges plugin;
+
+  private SettingsHandler settingsHandler;
+
+  public PlayerListener(final JoinPrivileges plugin) {
+    this.plugin = plugin;
+    settingsHandler = new SettingsHandler(plugin);
+  }
 
   @EventHandler(priority = EventPriority.HIGHEST)
   public void onPlayerJoin(PlayerJoinEvent playerJoinEvent) {
@@ -42,31 +49,31 @@ public class PlayerListener implements Listener {
   }
 
   private void playerJoin(final Player player) {
-    final JoinLeaveUtil joinLeaveUtil = new JoinLeaveUtil(player);
+    final JoinLeaveUtil joinLeaveUtil = new JoinLeaveUtil(plugin, player);
 
-    if(settingsHandler.getBoolean("Join_Effects.Enabled")) {
+    if(settingsHandler.getConfigFile().getConfig().getBoolean("Join_Effects.Enabled")) {
       joinEffects(player);
     }
 
-    if(!settingsHandler.getBoolean("Join_Settings.Enabled")) {
+    if(!settingsHandler.getConfigFile().getConfig().getBoolean("Join_Settings.Enabled")) {
       return;
     }
 
-    if(settingsHandler.getBoolean("Join_Settings.Join_Commands")) {
-      joinLeaveUtil.commandExecutor(settingsHandler.getStringList("Join_Settings.Join_Commands.Commands"));
+    if(settingsHandler.getConfigFile().getConfig().getBoolean("Join_Settings.Join_Commands")) {
+      joinLeaveUtil.commandExecutor(settingsHandler.getConfigFile().getConfig().getStringList("Join_Settings.Join_Commands.Commands"));
     }
 
-    if(!settingsHandler.getBoolean("Join_Settings.Group_Join_Settings.Enabled")) {
+    if(!settingsHandler.getConfigFile().getConfig().getBoolean("Join_Settings.Group_Join_Settings.Enabled")) {
       Utilities.broadcast(joinLeaveUtil.defaultJoinMessage());
       return;
     }
 
-    for(String groupName : settingsHandler.getSection("Join_Settings.Group_Join_Settings.Groups").getKeys(false)) {
+    for(String groupName : settingsHandler.getConfigFile().getConfig().getConfigurationSection("Join_Settings.Group_Join_Settings.Groups").getKeys(false)) {
       if(Utilities.checkPermission(player, false, "joinprivileges.join.groups." + groupName)) {
         joinLeaveUtil.playerMessage("Join_Settings.Group_Join_Settings.Groups." + groupName + ".Join_Message");
 
-        if(settingsHandler.getBoolean("Join_Settings.Group_Join_Settings.Groups." + groupName + ".Group_Commands.Enabled")) {
-          joinLeaveUtil.commandExecutor(settingsHandler.getStringList("Join_Settings.Group_Join_Settings.Groups." + groupName + ".Group_Commands.Commands"));
+        if(settingsHandler.getConfigFile().getConfig().getBoolean("Join_Settings.Group_Join_Settings.Groups." + groupName + ".Group_Commands.Enabled")) {
+          joinLeaveUtil.commandExecutor(settingsHandler.getConfigFile().getConfig().getStringList("Join_Settings.Group_Join_Settings.Groups." + groupName + ".Group_Commands.Commands"));
           return;
         }
         return;
@@ -77,27 +84,27 @@ public class PlayerListener implements Listener {
   }
 
   private void playerQuit(final Player player) {
-    final JoinLeaveUtil joinLeaveUtil = new JoinLeaveUtil(player);
+    final JoinLeaveUtil joinLeaveUtil = new JoinLeaveUtil(plugin, player);
 
-    if(!settingsHandler.getBoolean("Quit_Settings.Enabled")) {
+    if(!settingsHandler.getConfigFile().getConfig().getBoolean("Quit_Settings.Enabled")) {
       return;
     }
 
-    if(settingsHandler.getBoolean("Quit_Settings.Quit_Commands")) {
-      joinLeaveUtil.commandExecutor(settingsHandler.getStringList("Quit_Settings.Quit_Commands.Commands"));
+    if(settingsHandler.getConfigFile().getConfig().getBoolean("Quit_Settings.Quit_Commands")) {
+      joinLeaveUtil.commandExecutor(settingsHandler.getConfigFile().getConfig().getStringList("Quit_Settings.Quit_Commands.Commands"));
     }
 
-    if(!settingsHandler.getBoolean("Quit_Settings.Group_Quit_Settings.Enabled")) {
+    if(!settingsHandler.getConfigFile().getConfig().getBoolean("Quit_Settings.Group_Quit_Settings.Enabled")) {
       Utilities.broadcast(joinLeaveUtil.defaultQuitMessage());
       return;
     }
 
-    for(String groupName : settingsHandler.getSection("Quit_Settings.Group_Quit_Settings.Groups").getKeys(false)) {
+    for(String groupName : settingsHandler.getConfigFile().getConfig().getConfigurationSection("Quit_Settings.Group_Quit_Settings.Groups").getKeys(false)) {
       if(Utilities.checkPermission(player, false, "joinprivileges.quit.groups." + groupName)) {
         joinLeaveUtil.playerMessage("Quit_Settings.Group_Quit_Settings.Groups." + groupName + ".Quit_Message");
 
-        if(settingsHandler.getBoolean("Quit_Settings.Group_Quit_Settings.Groups." + groupName + ".Group_Commands.Enabled")) {
-          joinLeaveUtil.commandExecutor(settingsHandler.getStringList("Quit_Settings.Group_Quit_Settings.Groups." + groupName + ".Group_Commands.Commands"));
+        if(settingsHandler.getConfigFile().getConfig().getBoolean("Quit_Settings.Group_Quit_Settings.Groups." + groupName + ".Group_Commands.Enabled")) {
+          joinLeaveUtil.commandExecutor(settingsHandler.getConfigFile().getConfig().getStringList("Quit_Settings.Group_Quit_Settings.Groups." + groupName + ".Group_Commands.Commands"));
           return;
         }
         return;
@@ -113,18 +120,18 @@ public class PlayerListener implements Listener {
       return;
     }
 
-    player.playSound(player.getLocation(), Sound.valueOf(settingsHandler.getString("Join_Effects.Sound")), 1 , 1);
+    player.playSound(player.getLocation(), Sound.valueOf(settingsHandler.getConfigFile().getConfig().getString("Join_Effects.Sound")), 1 , 1);
     new BukkitRunnable() {
       @Override
       public void run() {
-        player.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, player.getLocation(), settingsHandler.getInt("Join_Effects.Particle_Amount"));
+        player.getWorld().spawnParticle(Particle.EXPLOSION_NORMAL, player.getLocation(), settingsHandler.getConfigFile().getConfig().getInt("Join_Effects.Particle_Amount"));
       }
-    }.runTaskLaterAsynchronously(JoinPrivileges.getInstance(), 20);
+    }.runTaskLaterAsynchronously(plugin, 20);
 
   }
 
   private void spigotUpdateNotify(final Player player) {
-    if(!settingsHandler.getBoolean("Update_Notify")) {
+    if(!settingsHandler.getConfigFile().getConfig().getBoolean("Update_Notify")) {
       return;
     }
 
@@ -132,15 +139,18 @@ public class PlayerListener implements Listener {
       return;
     }
 
-    new SpigotUpdater(JoinPrivileges.getInstance(), 84563).getVersion(version -> {
-      if(JoinPrivileges.getInstance().getDescription().getVersion().equalsIgnoreCase(version)) {
-        Utilities.logInfo(true, "You are already running the latest version");
+    new SpigotUpdater(plugin, 84563).getVersion(version -> {
+      int spigotVersion = Integer.parseInt(version.replace(".", ""));
+      int pluginVersion = Integer.parseInt(plugin.getDescription().getVersion().replace(".", ""));
+
+      if(pluginVersion >= spigotVersion) {
+        Utilities.logInfo(true, "There are no new updates for the plugin. Enjoy!");
         return;
       }
 
-      PluginDescriptionFile pdf = JoinPrivileges.getInstance().getDescription();
+      PluginDescriptionFile pdf = plugin.getDescription();
       Utilities.logWarning(true,
-        "A new version of " + pdf.getName() + " is available!",
+        "A new version of " + pdf.getName() + " is avaliable!",
         "Current Version: " + pdf.getVersion() + " > New Version: " + version,
         "Grab it here: https://github.com/OmegaWeaponDev/JoinPrivileges"
       );

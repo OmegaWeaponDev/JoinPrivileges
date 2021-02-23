@@ -10,8 +10,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
 public class CoreCommand extends GlobalCommand {
-  private final JoinPrivileges plugin = JoinPrivileges.getInstance();
-  private final MessageHandler messageHandler = new MessageHandler(plugin.getMessagesFile().getConfig());
+  private final JoinPrivileges plugin;
+  private final MessageHandler messageHandler;
+
+  public CoreCommand(final JoinPrivileges plugin) {
+    this.plugin = plugin;
+    messageHandler = new MessageHandler(plugin, plugin.getSettingsHandler().getMessagesFile().getConfig());
+  }
 
   @Override
   protected void execute(final CommandSender sender, final String[] strings) {

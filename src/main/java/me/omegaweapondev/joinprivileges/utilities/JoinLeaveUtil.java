@@ -8,12 +8,16 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 public class JoinLeaveUtil {
-  private final SettingsHandler settingsHandler = new SettingsHandler(JoinPrivileges.getInstance().getConfigFile().getConfig());
-
+  private final JoinPrivileges plugin;
   private final Player player;
 
-  public JoinLeaveUtil(final Player player) {
+  private SettingsHandler settingsHandler;
+
+  public JoinLeaveUtil(final JoinPrivileges plugin, final Player player) {
+    this.plugin = plugin;
     this.player = player;
+
+    settingsHandler = new SettingsHandler(plugin);
   }
 
   public void playerMessage(final String key) {
@@ -36,7 +40,7 @@ public class JoinLeaveUtil {
   }
 
   private String message(final String key) {
-    String message = settingsHandler.getString(key);
+    String message = settingsHandler.getConfigFile().getConfig().getString(key);
 
     if(message.contains("%player%")) {
       message = message.replace("%player%", player.getName());
@@ -47,11 +51,11 @@ public class JoinLeaveUtil {
     }
 
     if(message.contains("%prefix%")) {
-      message = message.replace("%prefix%", JoinPrivileges.getInstance().getChat().getPlayerPrefix(player));
+      message = message.replace("%prefix%", plugin.getChat().getPlayerPrefix(player));
     }
 
     if(message.contains("%suffix%")) {
-      message = message.replace("%suffix%", JoinPrivileges.getInstance().getChat().getPlayerSuffix(player));
+      message = message.replace("%suffix%", plugin.getChat().getPlayerSuffix(player));
     }
 
     if(message.contains("%maxPlayers%")) {

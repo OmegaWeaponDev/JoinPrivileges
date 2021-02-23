@@ -2,63 +2,61 @@ package me.omegaweapondev.joinprivileges.utilities;
 
 import me.omegaweapondev.joinprivileges.JoinPrivileges;
 import me.ou.library.Utilities;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
+import me.ou.library.configs.ConfigCreator;
+import me.ou.library.configs.ConfigUpdater;
 
-import java.util.List;
+import java.io.IOException;
+import java.util.Arrays;
 
 public class SettingsHandler {
-  private final FileConfiguration configFile;
-  private final String configName;
+  private final JoinPrivileges plugin;
+  private final ConfigCreator configFile = new ConfigCreator("config.yml");
+  private final ConfigCreator messagesFile = new ConfigCreator("messages.yml");
+
   
-  public SettingsHandler(final FileConfiguration configFile) {
-    this.configFile = configFile;
-    this.configName = JoinPrivileges.getInstance().getConfigFile().getFileName();
+  public SettingsHandler(final JoinPrivileges plugin) {
+    this.plugin = plugin;
   }
 
-  public String getString(final String key) {
-    if(configFile.getString(key) == null) {
-      getErrorMessage(key);
-      return "";
+  public void setupConfigs() {
+    // Setup the files
+    getConfigFile().createConfig();
+    getMessagesFile().createConfig();
+  }
+
+  public void configUpdater() {
+    Utilities.logInfo(true, "Attempting to update the config files....");
+
+    try {
+      if(getConfigFile().getConfig().getDouble("Config_Version") != 1.0) {
+        getConfigFile().getConfig().set("Config_Version", 1.0);
+        getConfigFile().saveConfig();
+        ConfigUpdater.update(plugin, "config.yml", getConfigFile().getFile(), Arrays.asList("Join_Settings.Group_Join_Settings.Groups", "Quit_Settings.Group_Quit_Settings.Groups"));
+        Utilities.logInfo(true, "The config.yml has successfully been updated!");
+      }
+
+      if(getMessagesFile().getConfig().getDouble("Config_Version") != 1.0) {
+        getMessagesFile().getConfig().set("Config_Version", 1.0);
+        getMessagesFile().saveConfig();
+        ConfigUpdater.update(plugin, "messages.yml", getMessagesFile().getFile(), Arrays.asList("none"));
+        Utilities.logInfo(true, "The messages.yml has successfully been updated!");
+      }
+      plugin.onReload();
+    } catch(IOException ex) {
+      ex.printStackTrace();
     }
-
-    return configFile.getString(key);
   }
 
-  public List<String> getStringList(final String key) {
-    if(configFile.getStringList(key).size() == 0) {
-      getErrorMessage(key);
-      return null;
-    }
-    return configFile.getStringList(key);
+  public void reloadFiles() {
+    getConfigFile().reloadConfig();
+    getMessagesFile().reloadConfig();
   }
 
-  public ConfigurationSection getSection(final String key) {
-    if (!configFile.isConfigurationSection(key)) {
-      getErrorMessage(key);
-      return null;
-    }
-
-    return configFile.getConfigurationSection(key);
+  public ConfigCreator getConfigFile() {
+    return configFile;
   }
 
-  public boolean getBoolean(final String key) {
-    return configFile.getBoolean(key, false);
-  }
-
-  public int getInt(final String key) {
-    return configFile.getInt(key, 0);
-  }
-
-  public double getDouble(final String key) {
-    return configFile.getDouble(key, 0);
-  }
-
-  private void getErrorMessage(final String key) {
-    Utilities.logInfo(true,
-      "There was an error getting the " + key + " message from the " + configName + ".",
-      "I have set a fallback message to take it's place until the issue is fixed.",
-      "To resolve this, please locate " + key + " in the " + configName + " and fix the issue."
-    );
+  public ConfigCreator getMessagesFile() {
+    return messagesFile;
   }
 }

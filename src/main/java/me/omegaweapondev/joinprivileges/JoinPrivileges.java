@@ -2,10 +2,10 @@ package me.omegaweapondev.joinprivileges;
 
 import me.omegaweapondev.joinprivileges.commands.CoreCommand;
 import me.omegaweapondev.joinprivileges.events.PlayerListener;
+import me.omegaweapondev.joinprivileges.utilities.Placeholders;
+import me.omegaweapondev.joinprivileges.utilities.SettingsHandler;
 import me.ou.library.SpigotUpdater;
 import me.ou.library.Utilities;
-import me.ou.library.configs.ConfigCreator;
-import me.ou.library.configs.ConfigUpdater;
 import net.milkbowl.vault.chat.Chat;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
@@ -13,41 +13,40 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.IOException;
-import java.util.Arrays;
-
 public class JoinPrivileges extends JavaPlugin {
-  public static JoinPrivileges instance;
-  private final ConfigCreator configFile = new ConfigCreator("config.yml");
-  private final ConfigCreator messagesFile = new ConfigCreator("messages.yml");
+  public JoinPrivileges plugin;
 
-  private static Chat chat = null;
+  private SettingsHandler settingsHandler;
+  private Chat chat = null;
 
   @Override
   public void onEnable() {
+    plugin = this;
+    settingsHandler = new SettingsHandler(plugin);
+
     initialSetup();
-    configSetup();
-    configUpdater();
+    getSettingsHandler().setupConfigs();
+    getSettingsHandler().configUpdater();
     setupChat();
-    commandAndEventSetup();
-    SpigotUpdater();
+    setupCommands();
+    setupEvents();
+    spigotUpdater();
   }
 
   @Override
   public void onDisable() {
-    instance = null;
+    plugin = null;
     super.onDisable();
   }
 
   public void onReload() {
-    getConfigFile().reloadConfig();
-    getMessagesFile().reloadConfig();
+    getSettingsHandler().reloadFiles();
   }
 
   private void initialSetup() {
 
     // Setup the instance for plugin and OU Library
-    instance = this;
+    plugin = this;
     Utilities.setInstance(this);
 
     // Make sure vault is installed
@@ -60,79 +59,62 @@ public class JoinPrivileges extends JavaPlugin {
       );
     }
 
+    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+      new Placeholders(this).register();
+    }
+
+    if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") == null) {
+      Utilities.logWarning(true,
+        "DeathWarden requires PlaceholderAPI to be installed if you are wanting to use the placeholders",
+        "You can install PlaceholderAPI here: https://www.spigotmc.org/resources/placeholderapi.6245/ "
+      );
+    }
+
     // Setup bStats
     final int bstatsPluginId = 8969;
-    Metrics metrics = new Metrics(getInstance(), bstatsPluginId);
+    Metrics metrics = new Metrics(plugin, bstatsPluginId);
 
     // Logs a message to console, saying that the plugin has enabled correctly.
     Utilities.logInfo(false,
       "   _________",
         "  |_  | ___ \\",
-        "    | | |_/ /  JoinPrivileges v" + getInstance().getDescription().getVersion() + " By OmegaWeaponDev.",
+        "    | | |_/ /  JoinPrivileges v" + plugin.getDescription().getVersion() + " By OmegaWeaponDev.",
         "    | |  __/   Handle the way players join and leave your server!",
-        "/\\__/ / |      Currently supporting spigot 1.13 upto 1.16.3",
+        "/\\__/ / |      Currently supporting spigot 1.13 upto 1.16.5",
         "\\____/\\_|",
       ""
     );
   }
 
-  private void configSetup() {
-    getConfigFile().createConfig();
-    getMessagesFile().createConfig();
-  }
-
-  private void commandAndEventSetup() {
-
-    // Setup the events
-    Utilities.registerEvents(new PlayerListener());
-
-    // Setup the commands
+  private void setupCommands() {
     Utilities.logInfo(true, "Registering the commands...");
 
-    Utilities.setCommand().put("joinprivileges", new CoreCommand());
+    Utilities.setCommand().put("joinprivileges", new CoreCommand(plugin));
 
     Utilities.registerCommands();
-
-    if(!Utilities.setCommand().isEmpty()) {
-      Utilities.logInfo(true, "Commands Successfully registered!");
-    }
+    Utilities.logInfo(true, "Commands Registered: " + Utilities.setCommand().size());
   }
 
-  private void configUpdater() {
-    Utilities.logInfo(true, "Attempting to update the config files....");
-
-    try {
-      if(getConfigFile().getConfig().getDouble("Config_Version") != 1.0) {
-        getConfigFile().getConfig().set("Config_Version", 1.0);
-        getConfigFile().saveConfig();
-        ConfigUpdater.update(getInstance(), "config.yml", getConfigFile().getFile(), Arrays.asList("Join_Settings.Group_Join_Settings.Groups", "Quit_Settings.Group_Quit_Settings.Groups"));
-        Utilities.logInfo(true, "The config.yml has successfully been updated!");
-      }
-
-      if(getMessagesFile().getConfig().getDouble("Config_Version") != 1.0) {
-        getMessagesFile().getConfig().set("Config_Version", 1.0);
-        getMessagesFile().saveConfig();
-        ConfigUpdater.update(getInstance(), "messages.yml", getMessagesFile().getFile(), Arrays.asList("none"));
-        Utilities.logInfo(true, "The messages.yml has successfully been updated!");
-      }
-      onReload();
-    } catch(IOException ex) {
-      ex.printStackTrace();
-    }
+  private void setupEvents() {
+    Utilities.registerEvents(new PlayerListener(plugin));
   }
 
-  private void SpigotUpdater() {
+  private void spigotUpdater() {
     new SpigotUpdater(this, 84563).getVersion(version -> {
-      if (this.getDescription().getVersion().equalsIgnoreCase(version)) {
-        Utilities.logInfo(true, "You are already running the latest version");
-      } else {
-        PluginDescriptionFile pdf = this.getDescription();
-        Utilities.logWarning(true,
-          "A new version of " + pdf.getName() + " is avaliable!",
-          "Current Version: " + pdf.getVersion() + " > New Version: " + version,
-          "Grab it here: https://github.com/OmegaWeaponDev/JoinPrivileges"
-        );
+      int spigotVersion = Integer.parseInt(version.replace(".", ""));
+      int pluginVersion = Integer.parseInt(this.getDescription().getVersion().replace(".", ""));
+
+      if(pluginVersion >= spigotVersion) {
+        Utilities.logInfo(true, "There are no new updates for the plugin. Enjoy!");
+        return;
       }
+
+      PluginDescriptionFile pdf = this.getDescription();
+      Utilities.logWarning(true,
+        "A new version of " + pdf.getName() + " is avaliable!",
+        "Current Version: " + pdf.getVersion() + " > New Version: " + version,
+        "Grab it here: https://github.com/OmegaWeaponDev/JoinPrivileges"
+      );
     });
   }
 
@@ -142,20 +124,11 @@ public class JoinPrivileges extends JavaPlugin {
     return chat != null;
   }
 
-
-  public ConfigCreator getConfigFile() {
-    return configFile;
-  }
-
-  public ConfigCreator getMessagesFile() {
-    return messagesFile;
-  }
-
   public Chat getChat() {
     return chat;
   }
 
-  public static JoinPrivileges getInstance() {
-    return instance;
+  public SettingsHandler getSettingsHandler() {
+    return settingsHandler;
   }
 }
