@@ -1,0 +1,327 @@
+#-------------------------------------------------------------------------------------------
+#
+#  Welcome to the JoinPrivileges' Rewards file.
+#
+#  Here you'll find all the different settings that
+#  you're able to adjust to get everything exactly how you want.
+#
+#  You can find all the materials here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Material.html
+#
+#-------------------------------------------------------------------------------------------
+
+# Whether you want players to receive daily, monthly and yearly join rewards.
+Join_Rewards:
+  Enabled: true
+
+# Customise the rewards menu to your liking
+Rewards_Menu:
+  # The title that will be used for rewards menu
+  Menu_Title: "#00D9B5Rewards Menu"
+  # Customise the daily rewards button
+  Daily_Rewards_Button:
+    Material: NETHER_STAR
+    Title: "#31D900Daily Rewards"
+    Lore:
+      - "#FF4A4AClick here to view"
+      - "#FF4A4Athe daily rewards"
+  # Customise the monthly rewards button
+  Monthly_Rewards_Button:
+    Material: COMPASS
+    Title: "#31D900Monthly Rewards"
+    Lore:
+      - "#FF4A4AClick here to view"
+      - "#FF4A4Athe monthly rewards"
+  # Customise the yearly rewards button
+  Yearly_Rewards_Button:
+    Material: CLOCK
+    Title: "#31D900Yearly Rewards"
+    Lore:
+      - "#FF4A4AClick here to view"
+      - "#FF4A4Athe yearly rewards"
+  # Customise the close button
+  Close_Button:
+    Material: BARRIER
+    Title: "#31D900Close Rewards"
+    Lore:
+      - "#FF4A4AClick here to close"
+      - "#FF4A4Athe rewards menu"
+
+# When you are adding the commands to the rewards
+# Please use %player% if you are wanting to get the
+# Players name.
+Rewards:
+  Daily_Rewards:
+    Enabled: true
+    Menu_Title: "#31D900Daily Rewards"
+    Return_Button:
+      Material: OAK_DOOR
+      Title: "#D94500Return"
+      Lore:
+        - "FF4A4AClick here to return"
+        - "FF4A4Ato the main rewards menu"
+    Close_Button:
+      Material: BARRIER
+      Title: "#31D900Close Rewards"
+      Lore:
+        - "#FF4A4AClick here to close"
+        - "#FF4A4Athe daily rewards menu"
+    # The daily rewards that you want to give players.
+    Rewards:
+      # The identifier for the reward.
+      Sunday:
+        # The Material that will be used for the reward.
+        Material: SUNFLOWER
+        # The title for the reward.
+        Title: "#FFE403Sunday Lotto"
+        # The command(s) that will be run to give players the reward.
+        Commands:
+          - eco give %player% 20
+        # The lore messages for the reward item.
+        Lore:
+          - "#FF4A4AClick here to receive the daily"
+          - "#FF4A4Areward for Sunday"
+      Monday:
+        Material: COW_SPAWN_EGG
+        Title: "#A30C0CMooonday"
+        Commands:
+          - give %player% cow_spawn_egg 9
+        Lore:
+          - "#FF4A4AClick here to receive the daily"
+          - "#FF4A4Areward for Monday"
+      Tuesday:
+        Material: GOLD_INGOT
+        Title: "#A30C0CGolden Tuesday"
+        Commands:
+          - give %player% gold_ingot 3
+        Lore:
+          - "#FF4A4AClick here to receive the daily"
+          - "#FF4A4Areward for Tuesday"
+      Wednesday:
+        Material: COOKED_BEEF
+        Title: "#462300Cooked Beef Wednesday"
+        Commands:
+          - give %player% cooked_beef 5
+        Lore:
+          - "#FF4A4AClick here to receive the daily"
+          - "#FF4A4Areward for Wednesday"
+      Thursday:
+        Material: COCA_BEANS
+        Title: "#462300Chocolate Thursday"
+        Commands:
+          - give %player% cocoa_beans 4
+        Lore:
+          - "#FF4A4AClick here to receive the daily"
+          - "#FF4A4Areward for Thursday"
+      Friday:
+        Material: CAULDRON
+        Title: "#4A97FFAlchemy Friday"
+        Commands:
+          - give %player% brewing_stand 1
+          - give %player% cauldron 1
+          - give %player% water_bucket 1
+        Lore:
+          - "#FF4A4AClick here to receive the daily"
+          - "#FF4A4Areward for Friday"
+      Saturday:
+        Material: CROSSBOW
+        Title: "#5D3502Hunters Saturday"
+        Commands:
+          - give %player% crossbow 1
+        Lore:
+          - "#FF4A4AClick here to receive the daily"
+          - "#FF4A4Areward for Saturday"
+  Monthly_Rewards:
+    Enabled: true
+    Menu_Title: "#31D900Monthly Rewards"
+    Return_Button:
+      Material: OAK_DOOR
+      Title: "#D94500Return"
+      Lore:
+        - "FF4A4AClick here to return"
+        - "FF4A4Ato the main rewards menu"
+    Close_Button:
+      Material: BARRIER
+      Title: "#31D900Close Rewards"
+      Lore:
+        - "#FF4A4AClick here to close"
+        - "#FF4A4Athe monthly rewards menu"
+    Rewards:
+      January:
+        Material: GOLDEN_AXE
+        Title: "#04B667January Axed"
+        Commands:
+          - give %player% golden_axe 1
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for January"
+      February:
+        Material: ROSE_BUSH
+        Title: "#FF3B3BLoving February"
+        Commands:
+          - give %player% rose_bush 1
+          - give %player% cake 1
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for February"
+      March:
+        Material: SUNFLOWER
+        Title: "#5CFF3BMad March"
+        Commands:
+          - eco give %player% 50
+          - give %player% iron_ingot 10
+          - give %player% gold_ingot 10
+          - give %player% coal_block 5
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for March"
+      April:
+        Material: COCOA_BEANS
+        Title: "#FF3BDEEaster April"
+        Commands:
+          - give %player% cocoa_beans 5
+          - give %player% milk_bucket 3
+          - give %player% wheat 3
+          - give %player% sugar 2
+          - give %player% egg 1
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for April"
+      May:
+        Material: FISHING_ROD
+        Title: "#3B79FFMay Fishing"
+        Commands:
+          - give %player% fishing_rod 1
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for May"
+      June:
+        Material: FURNACE
+        Title: "#471700Furnace June"
+        Commands:
+          - give %player% coal_block 5
+          - give %player% furnace 1
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for June"
+      July:
+        Material: SUNFLOWER
+        Title: "#5DF600July Lotto"
+        Commands:
+          - eco give %player% 100
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for July"
+      August:
+        Material: CRAFTING_TABLE
+        Title: "#00F6C9August Crafting"
+        Commands:
+          - give %player% crafting_table 1
+          - give %player% stick 64
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for August"
+      September:
+        Material: COOKED_BEEF
+        Title: "#5B54FFFoodie September"
+        Commands:
+          - give %player% cooked_beef 2
+          - give %player% cooked_chicken 2
+          - give %player% cooked_pork 2
+          - feed %player%
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for September"
+      October:
+        Material: COBWEB
+        Title: "#03012DSpooky October"
+        Commands:
+          - give %player% cobweb 5
+          - give %player% spider_spawn_egg 3
+          - give %player% spider_eye 5
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for October"
+      November:
+        Material: COMPASS
+        Title: "#74E100Explorers November"
+        Commands:
+          - give %player% compass 1
+          - give %player% torch 64
+          - give %player% golden_sword 1
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for November"
+      December:
+        Material: FIREWORK_ROCKET
+        Title: "#00AF15Festive #FA4F47December"
+        Commands:
+          - give %player% cake 1
+          - give %player% firework_rocket 3
+          - eco give %player% 100
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for December"
+  Yearly_Rewards:
+    Enabled: true
+    Menu_Title: "#31D900YearlyRewards"
+    Return_Button:
+      Material: OAK_DOOR
+      Title: "#D94500Return"
+      Lore:
+        - "FF4A4AClick here to return"
+        - "FF4A4Ato the main rewards menu"
+    Close_Button:
+      Material: BARRIER
+      Title: "#31D900Close Rewards"
+      Lore:
+        - "#FF4A4AClick here to close"
+        - "#FF4A4Athe yearly rewards menu"
+    Rewards:
+      2021:
+        Material: SUNFLOWER
+        Title: "#FA477BYearly shopping"
+        Commands:
+          - eco give %player% 250
+          - give %player% chest 4
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for 2021"
+      2022:
+        Material: MINECART
+        Title: "#D9FA47Yearly Holidays"
+        Commands:
+          - give %player% minecart 1
+          - give %player% chest 2
+          - give %player% map 1
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for 2022"
+      2023:
+        Material: BOOKSHELF
+        Title: "#47FAE4Yearly Studies"
+        Commands:
+          - give %player% bookcase 1
+          - give %player% enchanted_book 1
+          - give %player% enchanting_table
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for 2023"
+      2024:
+        Material: ROSE_BUSH
+        Title: "#9847FAFestive Years"
+        Commands:
+          - give %player% rose_bush 1
+          - give %player% firework_rocket 2
+          - give %player% bell 1
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for 2024"
+      2025:
+        Material: ELYTRA
+        Title: "#47CFFAYearly Flying"
+        Commands:
+          - give %player% elytra 1
+          - give %player% map 1
+        Lore:
+          - "#FF4A4AClick here to receive the monthly"
+          - "#FF4A4Areward for 2025"

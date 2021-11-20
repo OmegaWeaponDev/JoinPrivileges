@@ -18,6 +18,7 @@
 #
 #  You can find all the sounds here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
 #  You can find all the particle effects here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+#  You can find all the firework effects here: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/FireworkEffect.Type.html
 #
 #-------------------------------------------------------------------------------------------
 
@@ -100,19 +101,41 @@ Quit_Settings:
             - give %player% emerald 1
 
 Join_Effects:
-  # Whether you want special join effects when a player logs in
+  # Customise the default settings for the join effects.
+  Join_Effects:
+    # If true, players will have sound, particle and firework join effects.
+    Enabled: true
+    Default_Effects:
+      Sound_Effect: BLOCK_LAVA_POP
+      Particle_Effect: ENCHANTMENT_TABLE
+      Firework_Effect: STAR
+
+# Should JoinPrivileges keep track of the number of total unique player joins
+Unique_Joins:
   Enabled: true
-  # A special sound that gets played to the player when they log in
-  Sound: ENTITY_CHICKEN_EGG
-  # A special particle effect that happens when the player logs in
-  Particle_Effect: EXPLOSION_LARGE
-  # The Particle Amount
-  # The Higher the amount, the more noticeable it is (30-50 is usually a good amount)
-  # Warning: Don't go overboard with the particle amount as it may cause lag it is too large
-  Particle_Amount: 30
+
+# Like a whitelist, Maintenance mode will stop players from joining the server
+# if they don't have the permission `joinprivileges.maintenance.join`.
+# If players without permission are online when it is enabled,
+# they will be kicked from the server with the kick message from the messages.yml
+Maintenance_Mode:
+  Enabled: false
+  Maintenance_MOTD:
+    - "#FF4A4AThis server is in MAINTENANCE MODE"
+    - "#FF4A4APlease come back later"
+
+Server_MOTD:
+  Enabled: false
+  Format:
+    - "#14abc9[+] #ff4a4aEveryone is welcome! #14abc9[+]"
+    - "#14abc9=[*]= #ff4a4aAn amazing social minecraft server #14abc9=[*]="
+
+# If true, players with the permission `joinprivileges.joinfullserver` will join even if the server is full
+Join_Full_Server:
+  Enabled: true
 
 # If true, players with the permission `joinprivileges.update` will receive update notifications.
 Update_Notify: true
 
 # DO NOT EDIT THIS!
-Config_Version: 1.0
+Config_Version: 2.0

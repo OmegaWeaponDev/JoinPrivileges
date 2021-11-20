@@ -12,35 +12,19 @@ softdepend:
 
 commands:
   joinprivileges:
-    description: The general command for the plugin
+    description: The core command for the JoinPrivileges plugin
     aliases: [jp, joinp, jprivileges]
+  joineffects:
+    description: The join effects command
+    aliases: [je, jeffects, joine]
+  maintenance:
+    description: The maintenance mode command
+    aliases: [jpm, mm]
+  playtime:
+    description: The playtime command
+    aliases: [play, playt, ptime, pt]
+  rewards:
+    description: The rewards command
+    aliases: [jprewards, joinprivilegesrewards, joinrewards, jr, jpr]
 
-permissions:
-  joinprivileges.admin:
-    description: Grants the user all the permissions for the plugin
-    default: false
-    children:
-      - joinprivileges.debug
-      - joinprivileges.reload
-      - joinprivileges.update
-      - joinprivileges.join.silent
-      - joinprivileges.quit.silent
-      - joinprivileges.joineffects.bypass
-  joinprivileges.debug:
-    description: Grants the user access to use the debug command
-    default: false
-  joinprivileges.reload:
-    description: Grants the user access to use the reload command
-    default: false
-  joinprivileges.update:
-    description: Allows the user to recieve plugin update messages
-    default: false
-  joinprivileges.join.silent:
-    description: Allows the user to join the server without sending a join message.
-    default: false
-  joinprivileges.quit.silent:
-    description: Allows the user to quit the server without sending a quit message.
-    default: false
-  joinprivileges.joineffects.bypass:
-    description: Allows the user to bypass the join effects
-    default: false
+permissions: {}

@@ -7,17 +7,45 @@
 #
 #-------------------------------------------------------------------------------------------
 
-# Set the plugin prefix that displays before all the plugin messages.
-Prefix: "&7&l[&3JP&7&l]"
+# Sets the plugins prefix to use in all the messages.
+# NOTE: A space will automatically be added after the prefix.
+Plugin_Prefix: "#8c8c8c[#2b9bbf&lOV#8c8c8c]"
+
+Join_Effects:
+  # Set the message a player gets when they change their join particle effects.
+  Particles: "#00D4FFYou have changed your join particle effect to: #FF4A4A%particleEffect%"
+  # Set the message a player gets when they change their join sound effects.
+  Sounds: "#00D4FFYou have changed your join sound effect to: #FF4A4A%soundEffect%"
+  # Set the message a player gets when they change their join fireworks effects.
+  Fireworks: "#00D4FFYou have changed your join firework effect to: #FF4A4A%fireworkEffect%"
+
+Quit_Effects:
+  # Set the message a player gets when they change their quit particle effects.
+  Particles: "#00D4FFYou have changed your join particle effect to: #FF4A4A%particleEffect%"
+  # Set the message a player gets when they change their quit sound effects.
+  Sounds: "#00D4FFYou have changed your join sound effect to: #FF4A4A%soundEffect%"
+  # Set the message a player gets when they change their quit fireworks effects.
+  Fireworks: "#00D4FFYou have changed your join firework effect to: #FF4A4A%fireworkEffect%"
+
+# Set the different messages players get when maintenance mode is enabled or disabled.
+Maintenance_Mode:
+  # Sets the message for when someone enables maintenance mode (broadcast to all players)
+  Enabled: "#5A47FAMaintenance Mode has been enabled!"
+  # Sets the message for when someone disables maintenance mode
+  Disabled: "#FF4A4AMaintenance Mode has been disabled!"
+  # Sets the message when someone without permission tries to join when maintenance mode is active.
+  Failed_Join: "#FAA647Maintenance mode is currently in effect, please join back later."
+  # Sets the messages someone gets when they are kicked because they don't have permission to be on the server with maintenance mode active.
+  Player_Kicked: "#FAA647You have been kicked because you don't have permission to be on while maintenance mode is active."
 
 # Set the message that is received when the plugin reload command is used.
-Plugin_Reload: "&3All JoinPrivileges settings have been reloaded!"
+Plugin_Reload: "#f63e3eJoinPrivileges has successfully been reloaded."
 
 # Set the message players get when they try to target a player that does not exist.
-Invalid_Player: "&cSorry, that player does not exist"
+Invalid_Player: "#f63e3eSorry, that player cannot be found."
 
 # Set the message players receive if they try using a JoinPrivileges command without permission
-No_Permission: "&cSorry, You do not have the correct privileges for that command."
+No_Permission: "#f63e3eSorry, You do not have the correct privileges for that command."
 
 # DO NOT EDIT THIS!
-Config_Version: 1.0
+Config_Version: 2.0

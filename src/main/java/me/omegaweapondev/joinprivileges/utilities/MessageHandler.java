@@ -2,58 +2,92 @@ package me.omegaweapondev.joinprivileges.utilities;
 
 import me.omegaweapondev.joinprivileges.JoinPrivileges;
 import me.ou.library.Utilities;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.List;
-
+/**
+ *
+ * Handles the messages for the plugin
+ *
+ * @author OmegaWeaponDev
+ */
 public class MessageHandler {
-  private final JoinPrivileges plugin;
+  private final JoinPrivileges pluginInstance;
   private final FileConfiguration messagesConfig;
   private final String configName;
 
-  public MessageHandler(final JoinPrivileges plugin, final FileConfiguration messagesConfig) {
-    this.plugin = plugin;
+  /**
+   *
+   * The public constructor for the MessagesHandler class
+   *
+   * @param pluginInstance (The plugin's instance)
+   * @param messagesConfig (The yaml file containing all the messages)
+   */
+  public MessageHandler(final JoinPrivileges pluginInstance, final FileConfiguration messagesConfig) {
+    this.pluginInstance = pluginInstance;
     this.messagesConfig = messagesConfig;
-    this.configName = plugin.getSettingsHandler().getMessagesFile().getFileName();
+    this.configName = messagesConfig.getName(); // Change once StorageManager is setup
   }
 
+  /**
+   *
+   * Handles String messages for players in-game
+   *
+   * @param message (The message from the file)
+   * @param fallbackMessage (The fall back message)
+   * @return (The message that is returned. Either message or fallBackMessage)
+   */
   public String string(final String message, final String fallbackMessage) {
     if(messagesConfig.getString(message) == null) {
       getErrorMessage(message);
       return getPrefix() + fallbackMessage;
     }
+
+    if(messagesConfig.getString(message).length() == 0) {
+      return null;
+    }
     return getPrefix() + messagesConfig.getString(message);
   }
 
+  /**
+   *
+   * Handles String messages for the console
+   *
+   * @param message (The message from the file)
+   * @param fallbackMessage (The fall back message)
+   * @return (The message that is returned. Either message or fallBackMessage)
+   */
   public String console(final String message, final String fallbackMessage) {
     if(messagesConfig.getString(message) == null) {
       getErrorMessage(message);
       return fallbackMessage;
     }
+
+    if(messagesConfig.getString(message).length() == 0) {
+      return null;
+    }
     return messagesConfig.getString(message);
   }
 
-  public List<String> stringList(final String message, final List<String> fallbackMessage) {
-    if(messagesConfig.getStringList(message).size() == 0) {
-      getErrorMessage(message);
-      return fallbackMessage;
-    }
-    return messagesConfig.getStringList(message);
-  }
-
-  public ConfigurationSection section(final String message) {
-    return messagesConfig.getConfigurationSection(message);
-  }
-
+  /**
+   *
+   * Handles the plugin's prefix
+   *
+   * @return (The plugin's prefix for all the messages)
+   */
   public String getPrefix() {
-    if(messagesConfig.getString("Prefix") == null) {
-      getErrorMessage("Prefix");
-      return "&7&l[&3JP&7&l]" + " ";
+    if(messagesConfig.getString("Plugin_Prefix") == null) {
+      getErrorMessage("Plugin_Prefix");
+      return "#8c8c8c[#2b9bbf&lOV#8c8c8c]" + " ";
     }
-    return messagesConfig.getString("Prefix") + " ";
+    return messagesConfig.getString("Plugin_Prefix") + " ";
   }
 
+  /**
+   *
+   * Provides a console error message if one of the messages returns the fallback message
+   *
+   * @param message (The message that returned the fallback message)
+   */
   private void getErrorMessage(final String message) {
     Utilities.logInfo(true,
       "There was an error getting the " + message + " message from the " + configName + ".",
@@ -61,6 +95,4 @@ public class MessageHandler {
       "To resolve this, please locate " + message + " in the " + configName + " and fix the issue."
     );
   }
-
-
 }

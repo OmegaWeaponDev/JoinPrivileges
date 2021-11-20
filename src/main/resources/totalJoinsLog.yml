@@ -1,0 +1,23 @@
+#-------------------------------------------------------------------------------------------
+#
+#  Welcome to the JoinPrivileges' Total Joins file.
+#
+#  Here you'll find all the different settings that
+#  you're able to adjust to get everything exactly how you want.
+#
+#-------------------------------------------------------------------------------------------
+
+# The number of unique player joins
+Unique_Player_Joins: 0
+
+# The total amount of player joins
+Total_Joins:
+  Daily: 0
+  Monthly: 0
+  Yearly: 0
+
+# The top player joins list
+Total_Player_Joins:
+  Daily: {}
+  Monthly: {}
+  Yearly: {}
