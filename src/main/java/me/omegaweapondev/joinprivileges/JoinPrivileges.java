@@ -136,7 +136,7 @@ public class JoinPrivileges extends JavaPlugin {
    */
   @Override
   public void onDisable() {
-    super.onDisable();
+    getUserDataHandler().saveUserDataToFile();
   }
 
   /**
