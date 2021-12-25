@@ -32,6 +32,8 @@ public class PlayerListener implements Listener {
   public void onPlayerQuit(PlayerQuitEvent playerQuitEvent) {
     final Player player = playerQuitEvent.getPlayer();
 
+    userDataHandler.setJoinStatus(player.getUniqueId(), UserDataHandler.PLAY_TIME, System.currentTimeMillis() - player.getFirstPlayed());
+    userDataHandler.setJoinStatus(player.getUniqueId(), UserDataHandler.LAST_SEEN, System.currentTimeMillis());
     userDataHandler.saveUserDataToFile(player.getUniqueId());
   }
 

@@ -79,7 +79,8 @@ public class CoreCommand extends GlobalCommand implements TabCompleter {
         messageHandler.getPrefix() + "#86DE0FJoin Effects Command: #CA002E/joineffects",
         messageHandler.getPrefix() + "#86DE0FPlaytime Command: #CA002E/playtime",
         messageHandler.getPrefix() + "#86DE0FPlaytime Others Command: #CA002E/playtime <player>",
-        messageHandler.getPrefix() + "#86DE0FRewards Command: #CA002E/rewards"
+        messageHandler.getPrefix() + "#86DE0FRewards Command: #CA002E/rewards",
+        messageHandler.getPrefix() + "#86DE0FJoin Stats Command: #CA002E/joinstats"
       );
       return;
     }
@@ -92,7 +93,8 @@ public class CoreCommand extends GlobalCommand implements TabCompleter {
         "Help Command: /joinprivileges help",
         "Maintenance Enable Command: /maintenance enable",
         "Maintenance Disable Command: /maintenance disable",
-        "Playtime Others Command: /playtime <player>"
+        "Playtime Others Command: /playtime <player>",
+        "Join Stats Command: /joinstats"
       );
     }
   }
@@ -162,7 +164,7 @@ public class CoreCommand extends GlobalCommand implements TabCompleter {
         " #14abc9Server Version: #ff4a4a" + Bukkit.getServer().getVersion(),
         " #14abc9Online Mode: #ff4a4a" + Bukkit.getOnlineMode(),
         " #14abc9Players Online: #ff4a4a" + Bukkit.getOnlinePlayers().size() + " / " + Bukkit.getMaxPlayers(),
-        " #14abc9JoinPrivileges Commands: #ff4a4a" + Utilities.setCommand().size() + " / 5 #14abc9registered",
+        " #14abc9JoinPrivileges Commands: #ff4a4a" + Utilities.setCommand().size() + " / 6 #14abc9registered",
         " #14abc9Currently Installed Plugins...",
         " " + plugins,
         "#14abc9==========================================="
@@ -182,7 +184,7 @@ public class CoreCommand extends GlobalCommand implements TabCompleter {
       " Server Version: " + Bukkit.getServer().getVersion(),
       " Online Mode: " + Bukkit.getOnlineMode(),
       " Players Online: " + Bukkit.getOnlinePlayers().size() + " / " + Bukkit.getMaxPlayers(),
-      " JoinPrivileges Commands: " + Utilities.setCommand().size() + " / 5 registered",
+      " JoinPrivileges Commands: " + Utilities.setCommand().size() + " / 6 registered",
       " Currently Installed Plugins...",
       " " + plugins,
       "==========================================="

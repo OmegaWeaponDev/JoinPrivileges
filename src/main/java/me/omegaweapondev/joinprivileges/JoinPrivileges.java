@@ -161,6 +161,7 @@ public class JoinPrivileges extends JavaPlugin {
     Utilities.setCommand().put("maintenance", new MaintenanceCommand(pluginInstance));
     Utilities.setCommand().put("playtime", new PlayTimeCommand(pluginInstance));
     Utilities.setCommand().put("rewards", new RewardsCommand(pluginInstance));
+    Utilities.setCommand().put("joinstats", new JoinStatsCommand());
 
     Utilities.registerCommands();
     Utilities.logInfo(true, "JoinPrivileges has successfully registered all of it's commands.");

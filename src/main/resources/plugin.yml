@@ -26,6 +26,9 @@ commands:
   rewards:
     description: The rewards command
     aliases: [jprewards, joinprivilegesrewards, joinrewards, jr, jpr]
+  joinstats:
+    description: The joinstats command
+    aliases: [jstats, playstats]
 
 permissions:
   joinprivileges.admin:
