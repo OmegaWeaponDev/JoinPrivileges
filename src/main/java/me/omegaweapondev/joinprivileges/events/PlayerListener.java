@@ -36,7 +36,7 @@ public class PlayerListener implements Listener {
   }
 
   @EventHandler(priority = EventPriority.HIGHEST)
-  public void onMaintenanceEnable(PlayerLoginEvent playerLoginEvent) {
+  public void onMaintenanceEnabled(PlayerLoginEvent playerLoginEvent) {
     final Player player = playerLoginEvent.getPlayer();
 
     if(!configFile.getBoolean("Maintenance_Mode.Enabled")) {

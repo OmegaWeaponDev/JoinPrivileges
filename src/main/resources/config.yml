@@ -114,6 +114,10 @@ Join_Effects:
 Unique_Joins:
   Enabled: true
 
+# Should JoinPrivileges keep track of the users play time?
+PlayTime_Settings:
+  Enabled: true
+
 # Like a whitelist, Maintenance mode will stop players from joining the server
 # if they don't have the permission `joinprivileges.maintenance.bypass`.
 # If players without permission are online when it is enabled,
@@ -124,13 +128,15 @@ Maintenance_Mode:
     - "#FF4A4AThis server is in MAINTENANCE MODE"
     - "#FF4A4APlease come back later"
 
+# The MOTD that is displayed on the multiplayer servers screen
+# all placeholders and colours are accepted.
 Server_MOTD:
   Enabled: false
   Format:
     - "#14abc9[+] #ff4a4aEveryone is welcome! #14abc9[+]"
     - "#14abc9=[*]= #ff4a4aAn amazing social minecraft server #14abc9=[*]="
 
-# If true, players with the permission `joinprivileges.joinfullserver` will join even if the server is full
+# If true, players with the permission `joinprivileges.join.fullserver` will join even if the server is full
 Join_Full_Server:
   Enabled: true
 

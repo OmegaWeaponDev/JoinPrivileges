@@ -71,13 +71,13 @@ public class UserDataHandler {
   public void addUserToMap(@NotNull final UUID playerUUID) {
     getUserDataMap().putIfAbsent(playerUUID, new ConcurrentHashMap<>());
 
-    setJoinStatus(playerUUID, userDataFile.getLong("Users." + playerUUID + "." + FIRST_JOINED, System.currentTimeMillis()), FIRST_JOINED);
-    setJoinStatus(playerUUID, userDataFile.getLong("Users." + playerUUID + "." + LAST_SEEN, 0), LAST_SEEN);
-    setJoinStatus(playerUUID, userDataFile.getLong("Users." + playerUUID + "." + PLAY_TIME, 0), PLAY_TIME);
+    setJoinStatus(playerUUID, FIRST_JOINED, userDataFile.getLong("Users." + playerUUID + "." + FIRST_JOINED, System.currentTimeMillis()));
+    setJoinStatus(playerUUID, LAST_SEEN, userDataFile.getLong("Users." + playerUUID + "." + LAST_SEEN, 0));
+    setJoinStatus(playerUUID, PLAY_TIME, userDataFile.getLong("Users." + playerUUID + "." + PLAY_TIME, 0));
 
-    setJoinStatus(playerUUID, userDataFile.getBoolean("Users." + playerUUID + "." + DAILY_REWARD_CLAIMED, false), DAILY_REWARD_CLAIMED);
-    setJoinStatus(playerUUID, userDataFile.getBoolean("Users." + playerUUID + "." + MONTHLY_REWARD_CLAIMED, false), MONTHLY_REWARD_CLAIMED);
-    setJoinStatus(playerUUID, userDataFile.getBoolean("Users." + playerUUID + "." + YEARLY_REWARD_CLAIMED, false), YEARLY_REWARD_CLAIMED);
+    setJoinStatus(playerUUID, DAILY_REWARD_CLAIMED, userDataFile.getBoolean("Users." + playerUUID + "." + DAILY_REWARD_CLAIMED, false));
+    setJoinStatus(playerUUID, MONTHLY_REWARD_CLAIMED, userDataFile.getBoolean("Users." + playerUUID + "." + MONTHLY_REWARD_CLAIMED, false));
+    setJoinStatus(playerUUID, YEARLY_REWARD_CLAIMED, userDataFile.getBoolean("Users." + playerUUID + "." + YEARLY_REWARD_CLAIMED, false));
   }
 
   /**
@@ -125,8 +125,9 @@ public class UserDataHandler {
    *
    * @param uuid (The player whose entry in the map is to be modified)
    * @param stat (The status effect to modify the value for)
+   * @param value (The status effect value)
    */
-  public void setJoinStatus(@NotNull UUID uuid, Object value, String stat) {
+  public void setJoinStatus(@NotNull UUID uuid, String stat, Object value) {
     getUserDataMap().get(uuid).put(stat, value);
   }
 

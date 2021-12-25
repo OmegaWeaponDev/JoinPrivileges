@@ -38,6 +38,13 @@ Maintenance_Mode:
   # Sets the messages someone gets when they are kicked because they don't have permission to be on the server with maintenance mode active.
   Player_Kicked: "#FAA647You have been kicked because you don't have permission to be on while maintenance mode is active."
 
+# Set the different messages players get when they use the playtime command.
+PlayTime_Messages:
+  # The message a player is sent when they check their own play time.
+  PlayTime_Self: "#5A47FAYour current play time is: #FAA647%playTime%"
+  # The message a player is sent when they check another players play time.
+  PlayTime_Others: "#5A47FAThe playtime for #FAA647%player% #5A47FAis: #FAA647%playTime%"
+
 # Set the message that is received when the plugin reload command is used.
 Plugin_Reload: "#f63e3eJoinPrivileges has successfully been reloaded."
 

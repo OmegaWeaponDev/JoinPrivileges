@@ -37,6 +37,7 @@ permissions:
       - joinprivileges.update
       - joinprivileges.maintenance.toggle
       - joinprivileges.maintenance.bypass
+      - joinprivileges.join.fullserver
   joinprivileges.reload:
     description: The permission required to reload the plugin.
     default: false
