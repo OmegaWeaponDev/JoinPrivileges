@@ -27,4 +27,28 @@ commands:
     description: The rewards command
     aliases: [jprewards, joinprivilegesrewards, joinrewards, jr, jpr]
 
-permissions: {}
+permissions:
+  joinprivileges.admin:
+    description: The wildcard permission that grants all the permissions for the plugin.
+    default: false
+    children:
+      - joinprivileges.reload
+      - joinprivileges.debug
+      - joinprivileges.update
+      - joinprivileges.maintenance.toggle
+      - joinprivileges.maintenance.bypass
+  joinprivileges.reload:
+    description: The permission required to reload the plugin.
+    default: false
+  joinprivileges.debug:
+    description: The permission required to run the debug command.
+    default: false
+  joinprivileges.update:
+    description: The permission required to recieve the update notifications.
+    default: false
+  joinprivileges.maintenance.toggle:
+    description: The permission required to toggle the maintenance mode status.
+    default: false
+  joinprivileges.maintenance.bypass:
+    description: The permission required to bypass the maintenance mode join block
+    default: false
