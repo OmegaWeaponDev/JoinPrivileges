@@ -89,18 +89,42 @@ public class StorageManager {
     getTotalJoinsLogFile().reloadConfig();
   }
 
+  /**
+   *
+   * Getter for the config file
+   *
+   * @return the config file
+   */
   public ConfigCreator getConfigFile() {
     return configFile;
   }
 
+  /**
+   *
+   * Getter for the messages file
+   *
+   * @return the messages file
+   */
   public ConfigCreator getMessagesFile() {
     return messagesFile;
   }
 
+  /**
+   *
+   * Getter for the join effects file
+   *
+   * @return the join effects file
+   */
   public ConfigCreator getJoinEffectsFile() {
     return joinEffectsFile;
   }
 
+  /**
+   *
+   * Getter for the rewards file
+   *
+   * @return the rewards file
+   */
   public ConfigCreator getRewardsFile() {
     return rewardsFile;
   }
@@ -109,6 +133,12 @@ public class StorageManager {
     return totalJoinsLogFile;
   }
 
+  /**
+   *
+   * Getter for the user data file
+   *
+   * @return the user data file
+   */
   public ConfigCreator getUserDataFile() {
     return userDataFile;
   }

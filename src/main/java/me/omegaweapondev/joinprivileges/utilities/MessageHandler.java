@@ -77,7 +77,7 @@ public class MessageHandler {
   public String getPrefix() {
     if(messagesConfig.getString("Plugin_Prefix") == null) {
       getErrorMessage("Plugin_Prefix");
-      return "#8c8c8c[#2b9bbf&lOV#8c8c8c]" + " ";
+      return "#8c8c8c[#2b9bbf&lJP#8c8c8c]" + " ";
     }
     return messagesConfig.getString("Plugin_Prefix") + " ";
   }

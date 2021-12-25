@@ -115,7 +115,7 @@ Unique_Joins:
   Enabled: true
 
 # Like a whitelist, Maintenance mode will stop players from joining the server
-# if they don't have the permission `joinprivileges.maintenance.join`.
+# if they don't have the permission `joinprivileges.maintenance.bypass`.
 # If players without permission are online when it is enabled,
 # they will be kicked from the server with the kick message from the messages.yml
 Maintenance_Mode:
