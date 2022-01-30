@@ -79,6 +79,9 @@ public class MessageHandler {
       getErrorMessage("Plugin_Prefix");
       return "#8c8c8c[#2b9bbf&lJP#8c8c8c]" + " ";
     }
+    if(messagesConfig.getString("Plugin_Prefix").equalsIgnoreCase("none")) {
+      return "";
+    }
     return messagesConfig.getString("Plugin_Prefix") + " ";
   }
 

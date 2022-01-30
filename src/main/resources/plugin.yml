@@ -29,6 +29,9 @@ commands:
   joinstats:
     description: The joinstats command
     aliases: [jstats, playstats]
+  seen:
+    description: The seen command
+    aliases: [jpseen, lastseen]
 
 permissions:
   joinprivileges.admin:
@@ -41,6 +44,8 @@ permissions:
       - joinprivileges.maintenance.toggle
       - joinprivileges.maintenance.bypass
       - joinprivileges.join.fullserver
+      - joinprivileges.seen.exempt
+      - joinprivileges.seen
   joinprivileges.reload:
     description: The permission required to reload the plugin.
     default: false
@@ -54,5 +59,11 @@ permissions:
     description: The permission required to toggle the maintenance mode status.
     default: false
   joinprivileges.maintenance.bypass:
-    description: The permission required to bypass the maintenance mode join block
+    description: The permission required to bypass the maintenance mode join block.
+    default: false
+  joinprivileges.seen:
+    description: The permission required to use the seen command.
+    default: false
+  joinprivileges.seen.exempt:
+    description: The permission required to be exempt from the seen commnad.
     default: false

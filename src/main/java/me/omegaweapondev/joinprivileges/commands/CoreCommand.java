@@ -80,7 +80,8 @@ public class CoreCommand extends GlobalCommand implements TabCompleter {
         messageHandler.getPrefix() + "#86DE0FPlaytime Command: #CA002E/playtime",
         messageHandler.getPrefix() + "#86DE0FPlaytime Others Command: #CA002E/playtime <player>",
         messageHandler.getPrefix() + "#86DE0FRewards Command: #CA002E/rewards",
-        messageHandler.getPrefix() + "#86DE0FJoin Stats Command: #CA002E/joinstats"
+        messageHandler.getPrefix() + "#86DE0FJoin Stats Command: #CA002E/joinstats",
+        messageHandler.getPrefix() + "#86DE0FSeen Command: #CA002E/seen <player>"
       );
       return;
     }
@@ -94,7 +95,8 @@ public class CoreCommand extends GlobalCommand implements TabCompleter {
         "Maintenance Enable Command: /maintenance enable",
         "Maintenance Disable Command: /maintenance disable",
         "Playtime Others Command: /playtime <player>",
-        "Join Stats Command: /joinstats"
+        "Join Stats Command: /joinstats",
+        "Seen Command: /seen <player>"
       );
     }
   }
@@ -111,7 +113,7 @@ public class CoreCommand extends GlobalCommand implements TabCompleter {
       return;
     }
 
-    Utilities.logInfo(true, "OmegaWarps v" + pluginInstance.getDescription().getVersion() + " By OmegaWeaponDev");
+    Utilities.logInfo(true, "JoinPrivileges v" + pluginInstance.getDescription().getVersion() + " By OmegaWeaponDev");
   }
 
   /**
